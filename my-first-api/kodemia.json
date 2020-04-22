@@ -1,0 +1,21 @@
+{
+    "koders": [
+        {
+            "name": "palito",
+            "generation": 7
+            
+        },
+        {
+            "name": "ana",
+            "generation": 7
+            
+        }
+    ],
+
+    "mentors":  [
+        {
+            "name":"Isra",
+            "generation": 4
+        }
+    ]
+}
