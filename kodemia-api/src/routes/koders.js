@@ -13,15 +13,66 @@ router.get('/', async (request, response) => {
 })
 
 router.post('/', async (request, response) => {
-  const newKoder = request.body
-  const koderCreated = await koders.create(newKoder)
+  try {
+    const koderCreated = await koders.create(request.body)
 
-  response.json({
-    message: 'new Koder added',
-    data: {
-      koder: koderCreated
-    }
-  })
+    response.json({
+      success: true,
+      message: 'new Koder added',
+      data: {
+        koder: koderCreated
+      }
+    })
+  } catch (error) {
+    response.status(400)
+    response.json({
+      success: false,
+      error: error.message
+    })
+  }
+})
+
+// DELETE /koders/:id
+// PATCH / koders/:id
+
+router.delete('/:id', async (request, response) => {
+  try {
+    const { id } = request.params
+    const koderDeleted = await koders.deleteById(id)
+    response.json({
+      success: true,
+      message: `koder with ${id} deleted`,
+      data: {
+        koder: koderDeleted
+      }
+    })
+  } catch (error) {
+    response.status(400)
+    response.json({
+      succes: false,
+      error: error.message
+    })
+  }
+})
+
+router.patch('/:id', async (request, response) => {
+  try {
+    const { id } = request.params
+    const koderUpdate = await koders.updateById(id, request.body)
+    response.json({
+      success: true,
+      message: `koder wit id ${id} updated`,
+      data: {
+        koder: koderUpdate
+      }
+    })
+  } catch (error) {
+    response.status(400)
+    response.json({
+      success: false,
+      error: error.message
+    })
+  }
 })
 
 module.exports = router

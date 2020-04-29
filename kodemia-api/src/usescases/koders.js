@@ -12,7 +12,16 @@ async function create (koderData) {
   return koderCreated
 }
 
+function deleteById (id) {
+  return Koder.findByIdAndRemove(id)
+}
+
+function updateById (id, data) {
+  return Koder.findByIdAndUpdate(id, data)
+}
 module.exports = {
   getAll,
-  create
+  create,
+  deleteById,
+  updateById
 }
