@@ -1,8 +1,10 @@
 const express = require('express')
 const koders = require('../usescases/koders')
 
+const auth = require('../middlewares/auth')
+
 const router = express.Router()
-router.get('/', async (request, response) => {
+router.get('/', auth, async (request, response) => {
   const allKoders = await koders.getAll()
   response.json({
     message: 'All koders',
@@ -12,7 +14,7 @@ router.get('/', async (request, response) => {
   })
 })
 
-router.post('/', async (request, response) => {
+router.post('/', auth, async (request, response) => {
   try {
     const koderCreated = await koders.create(request.body)
 
@@ -64,6 +66,25 @@ router.patch('/:id', async (request, response) => {
       message: `koder wit id ${id} updated`,
       data: {
         koder: koderUpdate
+      }
+    })
+  } catch (error) {
+    response.status(400)
+    response.json({
+      success: false,
+      error: error.message
+    })
+  }
+})
+
+router.post('/signup', async (request, response) => {
+  try {
+    const newKoder = await koders.signup(request.body)
+    response.json({
+      success: true,
+      message: 'Koder registered',
+      data: {
+        koder: newKoder
       }
     })
   } catch (error) {
